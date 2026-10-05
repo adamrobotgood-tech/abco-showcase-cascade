@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05060a">
+  <title>Cascade Deck — Grok Bot · ABCO Media</title>
+  <meta name="description" content="Pitch deck: Cascade campaign for Grok Bot by xAI. Showcase by ABCO Media.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05060a;
+      --text: #f4f6fb;
+      --muted: rgba(244, 246, 251, 0.62);
+      --dim: rgba(244, 246, 251, 0.38);
+      --cyan: #22d3ee;
+      --ember: #ff6b3d;
+      --violet: #8b5cf6;
+      --line: rgba(255, 255, 255, 0.1);
+      --font: "Inter", system-ui, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 45% at 50% -5%, rgba(34, 211, 238, 0.1), transparent 55%),
+        radial-gradient(ellipse 45% 35% at 95% 30%, rgba(255, 107, 61, 0.08), transparent 50%),
+        radial-gradient(ellipse 40% 30% at 10% 80%, rgba(139, 92, 246, 0.07), transparent 50%);
+    }
+    .noise {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .deck {
+      position: relative; z-index: 2;
+      height: 100%; width: 100%;
+    }
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(32px, 6vw, 72px) clamp(28px, 8vw, 96px);
+      opacity: 0; visibility: hidden;
+      transform: translateX(28px);
+      transition: opacity 0.45s var(--ease), transform 0.45s var(--ease), visibility 0.45s;
+      pointer-events: none;
+    }
+    .slide.active {
+      opacity: 1; visibility: visible;
+      transform: none;
+      pointer-events: auto;
+    }
+    .slide.exit-left {
+      transform: translateX(-28px);
+    }
+
+    .eyebrow {
+      font-family: var(--mono); font-size: 12px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--cyan);
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    }
+    .eyebrow::before {
+      content: ""; width: 28px; height: 1px; background: var(--cyan);
+    }
+    h1 {
+      font-size: clamp(40px, 7.5vw, 84px);
+      line-height: 0.96; letter-spacing: -0.045em; font-weight: 800;
+      max-width: 14ch;
+    }
+    h1 .grad {
+      background: linear-gradient(100deg, #fff 8%, #bff6ff 40%, var(--cyan) 68%, var(--ember));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    h2 {
+      font-size: clamp(32px, 5.5vw, 58px);
+      line-height: 1.05; letter-spacing: -0.035em; font-weight: 700;
+      max-width: 18ch; margin-bottom: 18px;
+    }
+    .lede {
+      font-size: clamp(17px, 2.1vw, 22px);
+      color: var(--muted); max-width: 38ch; line-height: 1.5;
+    }
+    .meta-line {
+      margin-top: 40px;
+      font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em;
+      color: var(--dim); text-transform: uppercase;
+    }
+
+    .grid-2 {
+      display: grid; gap: 20px;
+      grid-template-columns: 1fr;
+      margin-top: 8px;
+      max-width: 900px;
+    }
+    @media (min-width: 720px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px 24px;
+      background: rgba(14, 17, 28, 0.65);
+    }
+    .card h3 {
+      font-size: 18px; letter-spacing: -0.015em; margin-bottom: 8px;
+    }
+    .card p { color: var(--muted); font-size: 15px; line-height: 1.5; }
+    .card .num {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+      color: var(--dim); margin-bottom: 10px;
+    }
+
+    .list {
+      list-style: none; margin-top: 8px; max-width: 720px;
+    }
+    .list li {
+      display: grid; grid-template-columns: 56px 1fr; gap: 16px;
+      padding: 16px 0; border-bottom: 1px solid var(--line);
+      align-items: start;
+    }
+    .list li:last-child { border-bottom: 0; }
+    .list .ix {
+      font-family: var(--mono); font-size: 13px; color: var(--cyan); padding-top: 3px;
+    }
+    .list strong { display: block; font-size: 18px; letter-spacing: -0.015em; margin-bottom: 4px; }
+    .list span { color: var(--muted); font-size: 15px; }
+    .list a { color: var(--cyan); border-bottom: 1px solid rgba(34,211,238,0.35); }
+    .list a:hover { color: #fff; border-color: #fff; }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 14px; padding: 12px 20px;
+      border-radius: 999px; border: 1px solid transparent;
+      text-decoration: none; color: inherit;
+      transition: transform 0.2s var(--ease), box-shadow 0.2s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), #06b6d4);
+      color: #041016;
+      box-shadow: 0 0 28px rgba(34, 211, 238, 0.28);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.16);
+    }
+    .btn-ember {
+      background: linear-gradient(135deg, var(--ember), #e11d48);
+      color: #fff;
+      box-shadow: 0 0 28px rgba(255, 107, 61, 0.25);
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 6px;
+      border: 1px solid rgba(34,211,238,0.35); color: var(--cyan);
+      margin-left: 8px; vertical-align: middle;
+    }
+    .tag.ember { color: var(--ember); border-color: rgba(255,107,61,0.4); }
+    .tag.violet { color: var(--violet); border-color: rgba(139,92,246,0.4); }
+
+    /* Chrome UI */
+    .chrome {
+      position: fixed; z-index: 30;
+      left: 0; right: 0; bottom: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px;
+      background: linear-gradient(180deg, transparent, rgba(5,6,10,0.85));
+      font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em;
+      color: var(--dim);
+      pointer-events: none;
+    }
+    .chrome .controls {
+      display: flex; gap: 8px; pointer-events: auto;
+    }
+    .chrome button {
+      width: 40px; height: 40px; border-radius: 10px;
+      border: 1px solid var(--line); background: rgba(14,17,28,0.8);
+      color: var(--text); cursor: pointer; font-size: 16px;
+      display: grid; place-items: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .chrome button:hover { border-color: rgba(255,255,255,0.28); background: rgba(255,255,255,0.06); }
+    .chrome button:disabled { opacity: 0.35; cursor: default; }
+    .progress {
+      position: fixed; top: 0; left: 0; height: 2px; z-index: 40;
+      background: linear-gradient(90deg, var(--cyan), var(--ember));
+      width: 12.5%;
+      transition: width 0.35s var(--ease);
+    }
+    .hint {
+      position: fixed; top: 18px; right: 24px; z-index: 30;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+      color: var(--dim); text-transform: uppercase;
+    }
+    @media (max-width: 600px) {
+      .hint { display: none; }
+      .list li { grid-template-columns: 40px 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="hint">← → or click</div>
+
+  <div class="deck" id="deck" role="region" aria-roledescription="carousel" aria-label="Cascade pitch deck">
+
+    <!-- 1 Title -->
+    <section class="slide active" data-slide="0" aria-label="Title">
+      <p class="eyebrow">Cascade · Project 03 / 04</p>
+      <h1>Desktop agents<br><span class="grad">that actually ship.</span></h1>
+      <p class="lede" style="margin-top:24px">Grok Bot by xAI — campaign kit for Adam Barnett / ABCO Media.</p>
+      <p class="meta-line">ABCO // Edit. Anything. · Powered by xAI</p>
+    </section>
+
+    <!-- 2 Problem -->
+    <section class="slide" data-slide="1" aria-label="Problem">
+      <p class="eyebrow">The problem</p>
+      <h2>Chat is cheap.<br>Glue work isn’t.</h2>
+      <p class="lede">Creators and media ops drown in briefs, edits, uploads, and handoffs. Most AI still hands you a paragraph and a to-do list. The work stays unfinished.</p>
+      <div class="grid-2" style="margin-top:32px">
+        <div class="card">
+          <h3>Talking tools</h3>
+          <p>Another tab that narrates. No browser. No shell. No deploy. You leave with advice, not an artifact.</p>
+        </div>
+        <div class="card">
+          <h3>Broken front doors</h3>
+          <p>abcomedia.net redirects every visitor to HTTPS — then TLS on 443 drops before a certificate. Brand promise meets connection error.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 Grok Bot difference -->
+    <section class="slide" data-slide="2" aria-label="Grok Bot difference">
+      <p class="eyebrow">The difference</p>
+      <h2>Grok Bot has a computer.</h2>
+      <ul class="list">
+        <li>
+          <span class="ix">01</span>
+          <div><strong>It finishes the job</strong><span>Install. Probe. Build. Push. You get the link — not a wishlist.</span></div>
+        </li>
+        <li>
+          <span class="ix">02</span>
+          <div><strong>Your stack, unblocked</strong><span>GitHub, Gmail, Drive, Vercel, shell, desktop browser — where the work already lives.</span></div>
+        </li>
+        <li>
+          <span class="ix">03</span>
+          <div><strong>Proudly xAI</strong><span>Useful, not polite wallpaper. Sharp when it matters. Warm when you need it.</span></div>
+        </li>
+        <li>
+          <span class="ix">04</span>
+          <div><strong>Team of bots</strong><span>Specialists hand off research, craft, and review — one coherent story.</span></div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 4 Echo -->
+    <section class="slide" data-slide="3" aria-label="Echo">
+      <p class="eyebrow">01 · Echo</p>
+      <h2>Intel before rearrange.</h2>
+      <p class="lede">Cinematic site intelligence on abcomedia.net — brand read, opportunity map, and a hard TLS diagnosis. No fake screenshots. Honest reporting.</p>
+      <div class="grid-2" style="margin-top:28px">
+        <div class="card">
+          <div class="num">FINDING</div>
+          <h3>TLS handshake fails</h3>
+          <p>HTTP 301 → HTTPS. Port 443 accepts TCP, then closes before presenting any certificate. Apex and www. Named and probed.</p>
+        </div>
+        <div class="card">
+          <div class="num">VALUE</div>
+          <h3>Agents that investigate</h3>
+          <p>When the live site wasn’t serving, the agent switched from writing to differential testing — curl, openssl, DNS — and left a runbook.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 Beacon -->
+    <section class="slide" data-slide="4" aria-label="Beacon">
+      <p class="eyebrow">02 · Beacon <span class="tag">Live</span></p>
+      <h2>The signal is on the air.</h2>
+      <p class="lede">Title-card hero. Capability constellation. Project ladder. Static site — no build step — deployed and public.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://adamrobotgood-tech.github.io/abco-showcase-beacon/" target="_blank" rel="noopener noreferrer">Open Beacon live</a>
+        <a class="btn btn-secondary" href="https://github.com/adamrobotgood-tech/abco-showcase-beacon" target="_blank" rel="noopener noreferrer">GitHub repo</a>
+      </div>
+      <p class="meta-line" style="margin-top:28px;text-transform:none;letter-spacing:0.02em;font-size:13px;color:var(--muted)">
+        adamrobotgood-tech.github.io/abco-showcase-beacon/
+      </p>
+    </section>
+
+    <!-- 6 Cascade -->
+    <section class="slide" data-slide="5" aria-label="Cascade">
+      <p class="eyebrow">03 · Cascade <span class="tag ember">This kit</span></p>
+      <h2>One story. Every channel.</h2>
+      <ul class="list">
+        <li>
+          <span class="ix">BRIEF</span>
+          <div><strong>Campaign brief</strong><span>Objective, audience, proof points, CTAs — internal alignment before send.</span></div>
+        </li>
+        <li>
+          <span class="ix">LAND</span>
+          <div><strong>One-pager</strong><span>Dark cinematic landing that matches Beacon — hero, ladder, proof, CTA.</span></div>
+        </li>
+        <li>
+          <span class="ix">MAIL</span>
+          <div><strong>Email × 2</strong><span>Short + long. Adam’s voice. Warm, direct, not spammy.</span></div>
+        </li>
+        <li>
+          <span class="ix">SOCIAL</span>
+          <div><strong>Five posts</strong><span>X / LinkedIn / IG captions promoting Grok Bot via the ABCO showcase.</span></div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 7 Singularity tease -->
+    <section class="slide" data-slide="6" aria-label="Singularity tease">
+      <p class="eyebrow">04 · Singularity <span class="tag violet">Next</span></p>
+      <h2>The command deck.</h2>
+      <p class="lede">Interactive Agent Command Deck — live panels, agent choreography, generative flourish. The portfolio piece that puts every skill on stage at once.</p>
+      <div class="grid-2" style="margin-top:32px">
+        <div class="card">
+          <h3>Ambition</h3>
+          <p>Not a brochure. A working surface that shows multi-agent motion in real time.</p>
+        </div>
+        <div class="card">
+          <h3>Why it matters</h3>
+          <p>Echo proved judgment. Beacon proved craft. Cascade proves distribution. Singularity proves the full stack.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 Close / CTA -->
+    <section class="slide" data-slide="7" aria-label="Close and CTA">
+      <p class="eyebrow">Close</p>
+      <h2>Ready when you are.</h2>
+      <p class="lede">Spin up a Grok Bot. Give it something real. Watch it move. Talk is cheap. Shipping is the point.</p>
+      <div class="cta-row">
+        <a class="btn btn-ember" href="https://x.ai" target="_blank" rel="noopener noreferrer">Launch on x.ai</a>
+        <a class="btn btn-primary" href="https://adamrobotgood-tech.github.io/abco-showcase-beacon/" target="_blank" rel="noopener noreferrer">See Beacon</a>
+        <a class="btn btn-secondary" href="index.html">Cascade landing</a>
+      </div>
+      <p class="meta-line">Powered by xAI · Built to ship · Showcase by ABCO Media</p>
+    </section>
+  </div>
+
+  <div class="chrome">
+    <div id="counter">01 / 08</div>
+    <div class="controls">
+      <button type="button" id="prev" aria-label="Previous slide">←</button>
+      <button type="button" id="next" aria-label="Next slide">→</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+      var total = slides.length;
+      var i = 0;
+      var counter = document.getElementById("counter");
+      var progress = document.getElementById("progress");
+      var prevBtn = document.getElementById("prev");
+      var nextBtn = document.getElementById("next");
+
+      function pad(n) { return (n < 10 ? "0" : "") + n; }
+
+      function go(n) {
+        if (n < 0 || n >= total) return;
+        slides[i].classList.remove("active");
+        if (n > i) slides[i].classList.add("exit-left");
+        else slides[i].classList.remove("exit-left");
+        i = n;
+        slides.forEach(function (s, idx) {
+          if (idx !== i) s.classList.remove("active", "exit-left");
+        });
+        slides[i].classList.add("active");
+        slides[i].classList.remove("exit-left");
+        counter.textContent = pad(i + 1) + " / " + pad(total);
+        progress.style.width = ((i + 1) / total * 100) + "%";
+        prevBtn.disabled = i === 0;
+        nextBtn.disabled = i === total - 1;
+      }
+
+      prevBtn.addEventListener("click", function () { go(i - 1); });
+      nextBtn.addEventListener("click", function () { go(i + 1); });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
+          e.preventDefault();
+          go(i + 1);
+        } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+          e.preventDefault();
+          go(i - 1);
+        } else if (e.key === "Home") {
+          e.preventDefault();
+          go(0);
+        } else if (e.key === "End") {
+          e.preventDefault();
+          go(total - 1);
+        }
+      });
+
+      // Click right half → next, left half → prev (ignore chrome / links)
+      document.getElementById("deck").addEventListener("click", function (e) {
+        if (e.target.closest("a, button")) return;
+        var x = e.clientX / window.innerWidth;
+        if (x > 0.55) go(i + 1);
+        else if (x < 0.45) go(i - 1);
+      });
+
+      go(0);
+    })();
+  </script>
+</body>
+</html>
